@@ -1,15 +1,24 @@
 {
   "name": "bookstore",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "npm run start:shell",
+    "start:shell": "ng serve shell  -o --port 4200",
+    "start:admin": "ng serve admin -o --port 4300",
+    "start:all": "concurrently \"npm run start:shell\" \"npm run start:admin\" ",
+    "build:shell": "ng build shell --prod",
+    "build:admin": "ng build admin --prod",
+    "serve:dist": "concurrently \"serve dist/shell -l 4200 -s\" \"serve dist/admin -l 4300 -s\" ",
+    "build": "npm run build:shell && npm run build:admin",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
   },
   "private": true,
   "dependencies": {
+    "@angular-architects/module-federation": "^14.3.14",
     "@angular/animations": "^14.2.0",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
@@ -27,12 +36,14 @@
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
+    "concurrently": "^7.5.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "ngx-build-plus": "^14.0.0",
     "typescript": "~4.7.2"
   }
 }
